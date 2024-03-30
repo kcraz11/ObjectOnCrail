@@ -23,5 +23,45 @@
             <version>1.2-incubating</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.crail</groupId>
+            <artifactId>crail-storage</artifactId>
+            <version>1.2-incubating</version>
+        </dependency>
+
+
     </dependencies>
+    <build>
+        <plugins>
+			<!-- maven相关下载插件 -->
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <configuration>
+					<!-- 是否排除间接依赖。默认false，不排除 -->
+                    <excludeTransitive>false</excludeTransitive>
+					<!-- 是否消除依赖jar包后缀的版本信息。默认是false，不取消版本信息 -->
+                    <stripVersion>false</stripVersion>
+					<!-- 输出文件路径 -->
+                    <outputDirectory>./target/lib</outputDirectory>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                <archive>
+                 <manifest>
+                <!-- 是否绑定依赖，将外部jar包依赖加入到classPath中 -->
+                <addClasspath>true</addClasspath>
+                <!-- 依赖前缀，与之前设置的文件夹路径要匹配 -->
+                <classpathPrefix>lib/</classpathPrefix>
+                <!-- 主函数的入口 -->
+                <mainClass>wl.ApiServer</mainClass>
+                </manifest>
+                </archive>
+                 </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    
 </project>
